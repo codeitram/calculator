@@ -1,6 +1,7 @@
 let var1 = null,
   var2 = null,
-  opr = null;
+  opr = null,
+  result = null;
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -43,7 +44,7 @@ buttons.forEach((button) => {
 function populateDisplay(e) {
   let display = document.querySelector(".screen p:last-child");
   // console.log(display.firstChild.data);
-
+  console.log(display.lastChild);
   if (this.value == "C") {
     display.parentNode.remove();
     let cal = document.querySelector(".cal-body");
@@ -55,21 +56,23 @@ function populateDisplay(e) {
     cal.prepend(div);
   }
   //
-  // else if ((this.value = "Backspace")) {
-  //   display.removeChild(".screen p:last-of-type");
-  // }
-  else if (
+  else if (this.value == "Backspace") {
+    display.removeChild(display.lastChild);
+    if (display.textContent == "") display.textContent = 0;
+  } else if (
     this.value == "*" ||
     this.value == "/" ||
     this.value == "+" ||
     this.value == "-"
   ) {
+    var2 = var1;
     var1 = display.textContent;
-    console.log(var1);
+    // console.log(var1);
     let screen = document.querySelector(".screen");
     let p = document.createElement("p");
     p.textContent = this.value;
     opr = this.value;
+
     let p1 = document.createElement("p");
     p1.textContent = "0";
     screen.append(p);
@@ -78,8 +81,9 @@ function populateDisplay(e) {
     // if(var1 == null || var2 == null)  {
 
     // }
+
     var2 = display.textContent;
-    let result = operate(opr, var1, var2);
+    result = operate(opr, var1, var2);
     display.parentNode.remove();
     let cal = document.querySelector(".cal-body");
     let div = document.createElement("div");
@@ -91,6 +95,10 @@ function populateDisplay(e) {
     p.textContent = result;
     if (var1 == null || var2 == null || opr == null) p.textContent = "ERROR";
     screen.append(p);
+    var1 = null;
+    var2 = null;
+    opr = null;
+
     // console.log(result);
   } else {
     if (this.value == ".") {
@@ -105,10 +113,6 @@ function populateDisplay(e) {
     }
   }
 }
-
-// function backspace(obj) {
-//   // obj.removeChild(obj.lastChild);
-// }
 
 document.addEventListener("keydown", (e) => {
   // console.log(e);
