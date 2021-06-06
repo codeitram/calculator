@@ -65,7 +65,6 @@ function populateDisplay(e) {
     this.value == "+" ||
     this.value == "-"
   ) {
-    var2 = var1;
     var1 = display.textContent;
     // console.log(var1);
     let screen = document.querySelector(".screen");
